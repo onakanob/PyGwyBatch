@@ -1,9 +1,6 @@
 #This script called by py2Parse.py. It invokes a python 2 interpreter
 #to call on each file recursively in a directory.
 
-#To capture the results of this process, recommended to pipe to a
-#text or csv file:
-#py2Script > myResults.txt
 import sys
 import os
 import re
@@ -11,7 +8,7 @@ import re
 ####### Customize Here #####
 # Import the function to be called on each file #
 from testFunction import testFunction \
-    as myFunction
+    as myFunction          # Don't change this
 ###### End Customize #######
 
 #Check local version info
@@ -24,9 +21,9 @@ directory = sys.argv[1]
 file_spec = sys.argv[2]
 
 #Walk the directory, printing the output from myFunction to stdout
-for root, dirs, files in os.walk(directory):
-    for filename in files:
-        file_path = os.path.join(root, filename)
-        if re.search(file_spec, file_path):
+for root, dirs, files in os.walk(directory): #gather a list of files in this directory
+    for filename in files: #step through all files found
+        file_path = os.path.join(root, filename) #get the full filepath
+        if re.search(file_spec, file_path): #if file_spec appears as a substring in the file path
             sys.stdout.write(filename+"\t")
             sys.stdout.write(myFunction(file_path)+"\n")
